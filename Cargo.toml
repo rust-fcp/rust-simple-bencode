@@ -1,5 +1,5 @@
 [package]
-name = "simple-bencode"
+name = "simple_bencode"
 version = "0.1.0"
 authors = ["Valentin Lorentz <progval+git@progval.net>"]
 
