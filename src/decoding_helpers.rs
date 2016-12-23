@@ -14,6 +14,15 @@ pub enum HelperDecodeError {
     FromUtf8Error(FromUtf8Error),
 }
 
+/// Pops a BValue::Integer from a HashMap.
+pub fn pop_value_integer(map: &mut HashMap<Vec<u8>, Value>, key: String) -> Result<i64, HelperDecodeError> {
+    match map.remove(&key.clone().into_bytes()) {
+        Some(Value::Integer(value)) => Ok(value),
+        Some(v) => Err(HelperDecodeError::BadType(format!("Expected integer string for key '{}', got: {:?}", key, v))),
+        None => Err(HelperDecodeError::MissingKey(key)),
+    }
+}
+
 /// Pops a BValue::String from a HashMap.
 pub fn pop_value_bytestring(map: &mut HashMap<Vec<u8>, Value>, key: String) -> Result<Vec<u8>, HelperDecodeError> {
     match map.remove(&key.clone().into_bytes()) {
@@ -44,7 +53,10 @@ mod tests {
         let mut map = HashMap::new();
         map.insert(b"foo".to_vec(), Value::String(b"bar".to_vec()));
         map.insert(b"baz".to_vec(), Value::String(b"qux".to_vec()));
+        map.insert(b"quux".to_vec(), Value::Integer(42));
         assert_eq!(pop_value_utf8_string(&mut map, "foo".to_owned()).unwrap(), "bar".to_owned());
         assert_eq!(pop_value_utf8_string(&mut map, "baz".to_owned()).unwrap(), "qux".to_owned());
+        assert_eq!(pop_value_integer(&mut map, "quux".to_owned()).unwrap(), 42);
+        assert_eq!(map, HashMap::new());
     }
 }
