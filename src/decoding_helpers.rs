@@ -32,12 +32,32 @@ pub fn pop_value_bytestring(map: &mut HashMap<Vec<u8>, Value>, key: String) -> R
     }
 }
 
+/// Pops an optional BValue::String from a HashMap.
+pub fn pop_value_bytestring_option(map: &mut HashMap<Vec<u8>, Value>, key: String) -> Result<Option<Vec<u8>>, HelperDecodeError> {
+    let encoded_value = pop_value_bytestring(map, key);
+    match String::from_utf8(encoded_value) {
+        Ok(decoded_value) => Ok(Some(decoded_value)),
+        Err(HelperDecodeError::MissingKey(_)) => Ok(None),
+        Err(e) => Err(e),
+    }
+}
+
 /// Pops a BValue::String from a HashMap and decode it into a Rust String.
 pub fn pop_value_utf8_string(map: &mut HashMap<Vec<u8>, Value>, key: String) -> Result<String, HelperDecodeError> {
     let encoded_value = try!(pop_value_bytestring(map, key));
     match String::from_utf8(encoded_value) {
         Ok(decoded_value) => Ok(decoded_value),
         Err(e) => Err(HelperDecodeError::FromUtf8Error(e)),
+    }
+}
+
+/// Pops an optional BValue::String from a HashMap and decode it into a Rust String.
+pub fn pop_value_utf8_string_option(map: &mut HashMap<Vec<u8>, Value>, key: String) -> Result<Option<String>, HelperDecodeError> {
+    let encoded_value = pop_value_utf8_string(map, key);
+    match String::from_utf8(encoded_value) {
+        Ok(decoded_value) => Ok(Some(decoded_value)),
+        Err(HelperDecodeError::MissingKey(_)) => Ok(None),
+        Err(e) => Err(e),
     }
 }
 

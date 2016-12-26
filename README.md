@@ -59,6 +59,12 @@ pub fn pop_value_integer(map: &mut HashMap<Vec<u8>, Value>, key: String) -> Resu
 /// Pops a BValue::String from a HashMap.
 pub fn pop_value_bytestring(map: &mut HashMap<Vec<u8>, Value>, key: String) -> Result<Vec<u8>, HelperDecodeError>;
 
+/// Pops an optional BValue::String from a HashMap.
+pub fn pop_value_bytestring_option(map: &mut HashMap<Vec<u8>, Value>, key: String) -> Result<Option<Vec<u8>>, HelperDecodeError>;
+
 /// Pops a BValue::String from a HashMap and decode it into a Rust String.
 pub fn pop_value_utf8_string(map: &mut HashMap<Vec<u8>, Value>, key: String) -> Result<String, HelperDecodeError>;
+
+/// Pops an optional BValue::String from a HashMap and decode it into a Rust String.
+pub fn pop_value_utf8_string_option(map: &mut HashMap<Vec<u8>, Value>, key: String) -> Result<Option<String>, HelperDecodeError>;
 ```
