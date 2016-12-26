@@ -1,9 +1,10 @@
 [package]
 name = "simple_bencode"
-version = "0.1.0"
+version = "0.1.2"
 authors = ["Valentin Lorentz <progval+git@progval.net>"]
 description = "Simple bencode decoder and decoder, that uses neither rustc-serialize or Serde. Instead, it serializes from / deserializes to a tree using a 4-branch enum."
 license = "MIT"
 repository = "https://github.com/rust-fcp/rust-simple-bencode"
+readme = "README.md"
 
 [dependencies]
