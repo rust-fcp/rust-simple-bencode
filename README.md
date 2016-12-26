@@ -1,5 +1,5 @@
 # rust-simple-bencode
-Simple bencode decoder and decoder, that uses neither rustc-serialize or Serde.
+Simple bencode encoder and decoder, that uses neither rustc-serialize or Serde.
 Instead, it serializes from / deserializes to a tree using a 4-branch enum."
 
 ## Basic usage
