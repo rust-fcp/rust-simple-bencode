@@ -92,10 +92,11 @@ fn read_dict<R: io::Read>(bytes: &mut Peekable<io::Bytes<R>>) -> Result<HashMap<
     let mut res = HashMap::<Vec<u8>, Value>::new();
     loop {
         let first_byte = try_read!(bytes);
-        if first_byte as char == 'e' {
-            break
-        }
-        res.insert(try!(read_string(bytes, first_byte)), try!(read(bytes)));
+        match first_byte as char {
+            'e' => break,
+            '0' ... '9' => res.insert(try!(read_string(bytes, first_byte)), try!(read(bytes))),
+            first_char => return Err(DecodeError::UnexpectedCharacter(format!("'{}' while expecting 'e' or 'e' or '0'..'9' (next key in dict)", first_char))),
+        };
     }
     Ok(res)
 }
