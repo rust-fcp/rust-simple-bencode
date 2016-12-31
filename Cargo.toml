@@ -1,6 +1,6 @@
 [package]
 name = "simple_bencode"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["Valentin Lorentz <progval+git@progval.net>"]
 description = "Simple bencode encoder and decoder, that uses neither rustc-serialize or Serde. Instead, it serializes from / deserializes to a tree using a 4-branch enum."
 license = "MIT"
